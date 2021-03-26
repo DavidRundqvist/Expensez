@@ -23,17 +23,13 @@
     
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="200"></ColumnDefinition>
+            <ColumnDefinition Width="100"></ColumnDefinition>
             <ColumnDefinition Width="*"></ColumnDefinition>
         </Grid.ColumnDefinitions>
         
    
 
-        <!-- Categories -->
-        <StackPanel Margin="10">
-            <ItemsControl  ItemsSource="{Binding Categories}"/>
-            <TextBox >...</TextBox>
-        </StackPanel>
+
 
 
         <!-- Expenses -->
