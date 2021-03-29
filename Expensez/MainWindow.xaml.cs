@@ -33,5 +33,11 @@ namespace Expensez {
         private void DataGrid_PreviewKeyDown(object sender, KeyEventArgs e) {
 
         }
+
+        private void SelectedTabChanged(object sender, SelectionChangedEventArgs e) {
+            if (_mainTab.SelectedItem == _resultsTab ) {
+                //Presentation.Results.CalculateResults();
+            }
+        }
     }
 }

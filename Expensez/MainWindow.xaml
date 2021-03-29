@@ -3,7 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:Expensez"
+        xmlns:local="clr-namespace:Expensez" xmlns:results="clr-namespace:Expensez.Results" d:DataContext="{d:DesignInstance Type=local:MainPresentation}"
         mc:Ignorable="d"
         
         Title="Expense Categorization" 
@@ -17,23 +17,23 @@
         </Style>
     </Window.Resources>
 
-    <TabControl>
+    <TabControl x:Name="_mainTab" SelectionChanged="SelectedTabChanged">
 
         <TabItem Header="Categorization" IsSelected="True">
-    
-    <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="100"></ColumnDefinition>
-            <ColumnDefinition Width="*"></ColumnDefinition>
-        </Grid.ColumnDefinitions>
-        
-   
+
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="100"></ColumnDefinition>
+                    <ColumnDefinition Width="*"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
 
 
 
 
-        <!-- Expenses -->
-        <DataGrid
+
+
+                <!-- Expenses -->
+                <DataGrid
             x:Name="_expenseGrid"
                 Grid.Column="1"
                 KeyDown="DataGrid_KeyDown"
@@ -46,53 +46,43 @@
                   
                       >
 
-            <DataGrid.RowStyle>
-                <Style TargetType="{x:Type DataGridRow}">
-                    <Setter Property="IsSelected" Value="{Binding IsSelected, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-                    <Setter Property="Background" Value="{Binding Color}"></Setter>
-                </Style>
-            </DataGrid.RowStyle>
-
-            <DataGrid.ContextMenu>
-                <ContextMenu ItemsSource="{Binding CategoryCommands}">
-                    <!--<ContextMenu.ItemTemplate>
-                        <DataTemplate>
-                            <TextBlock Header="{Binding Path=Header}" Command="{Binding MyCommand}" />
-                        </DataTemplate>
-                    </ContextMenu.ItemTemplate>-->
-
-                    <ContextMenu.ItemContainerStyle>
-                        <Style TargetType="{x:Type MenuItem}">
-                            <Setter Property="Header" Value="{Binding Header}"/>
+                    <DataGrid.RowStyle>
+                        <Style TargetType="{x:Type DataGridRow}">
+                            <Setter Property="IsSelected" Value="{Binding IsSelected, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                            <Setter Property="Background" Value="{Binding Color}"></Setter>
                         </Style>
-                    </ContextMenu.ItemContainerStyle> 
-
-                    <!--<MenuItem Header="Övrigt"></MenuItem>
-                    <MenuItem Header="Restaurang"></MenuItem>
-                    <MenuItem Header="Livsmedel"></MenuItem>
-                    <MenuItem Header="New..."></MenuItem>-->
-                </ContextMenu>
-            </DataGrid.ContextMenu>
-            
-            
-
-            <DataGrid.Columns>
-                <DataGridTextColumn Header="Date"       Binding="{Binding Date,         Mode=OneTime}" IsReadOnly="True"  ElementStyle="{StaticResource ColumnElementStyle}"/>
-                <DataGridTextColumn Header="Recipient"  Binding="{Binding Recipient,    Mode=OneTime}" IsReadOnly="True"  ElementStyle="{StaticResource ColumnElementStyle}"/>
-                <DataGridTextColumn Header="Amount"     Binding="{Binding Amount,       Mode=OneTime}" IsReadOnly="True"  ElementStyle="{StaticResource ColumnElementStyle}"/>
-                <DataGridTextColumn Header="Category"   Binding="{Binding Category,     Mode=TwoWay}"  IsReadOnly="False" ElementStyle="{StaticResource ColumnElementStyle}"/>
-            </DataGrid.Columns>
+                    </DataGrid.RowStyle>
 
 
-        </DataGrid>
+                    <DataGrid.ContextMenu>
+                        <ContextMenu ItemsSource="{Binding CategoryCommands}">
+                            <ContextMenu.ItemContainerStyle>
+                                <Style TargetType="{x:Type MenuItem}">
+                                    <Setter Property="Header" Value="{Binding Header}"/>
+                                </Style>
+                            </ContextMenu.ItemContainerStyle>
+                        </ContextMenu>
+                    </DataGrid.ContextMenu>
+
+
+
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="Date"       Binding="{Binding Date,         Mode=OneTime}" IsReadOnly="True"  ElementStyle="{StaticResource ColumnElementStyle}"/>
+                        <DataGridTextColumn Header="Recipient"  Binding="{Binding Recipient,    Mode=OneTime}" IsReadOnly="True"  ElementStyle="{StaticResource ColumnElementStyle}"/>
+                        <DataGridTextColumn Header="Amount"     Binding="{Binding Amount,       Mode=OneTime}" IsReadOnly="True"  ElementStyle="{StaticResource ColumnElementStyle}"/>
+                        <DataGridTextColumn Header="Category"   Binding="{Binding Category,     Mode=TwoWay}"  IsReadOnly="False" ElementStyle="{StaticResource ColumnElementStyle}"/>
+                    </DataGrid.Columns>
+
+
+                </DataGrid>
 
 
             </Grid>
         </TabItem>
 
 
-        <TabItem Header="Results" IsSelected="True">
-
+        <TabItem x:Name="_resultsTab" Header="Results" IsSelected="True" >
+            <results:ResultsView DataContext="{Binding Results}"></results:ResultsView>
         </TabItem>
 
     </TabControl>

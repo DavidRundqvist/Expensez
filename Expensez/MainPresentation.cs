@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Expensez.Results;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -14,11 +15,13 @@ namespace Expensez {
         private readonly ExpenseRepository _repository;
         private readonly CategoryRepository _categories;
         private readonly ICommand _newCategoryCommand;
+        private readonly ResultsPresentation _results;
 
         public MainPresentation(ExpenseRepository repository, CategoryRepository categories) {
             _repository = repository;
             _categories = categories;
             _newCategoryCommand = new NewCategoryCommand(this);
+            _results = new ResultsPresentation(repository, categories);
         }
 
         public void Load() {
@@ -66,6 +69,8 @@ namespace Expensez {
         public event PropertyChangedEventHandler PropertyChanged;
 
         public ExpensePresentation[] SelectedExpenses => Expenses.Where(e => e.IsSelected).ToArray();
+
+        public ResultsPresentation Results => _results;
 
         public void SetCategory(string category) {
             foreach(var expense in SelectedExpenses) {
