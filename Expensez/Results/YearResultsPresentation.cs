@@ -10,19 +10,20 @@ namespace Expensez.Results {
     public class YearResultsPresentation : INotifyPropertyChanged {
         private int _year;
         private Expense[] _expenses;
-        private IDictionary<string, string> _categories;
+        private Category[] _categories;
 
-        public YearResultsPresentation(int year, Expense[] expenses, IDictionary<string, string> categories) {
+        public YearResultsPresentation(int year, Expense[] expenses, Category[] categories) {
             _year = year;
             _expenses = expenses;
             _categories = categories;
 
             var categoryExpenses = from expense in expenses
-                                   let category = categories.ContainsKey(expense.Recipient) ? categories[expense.Recipient] : "Övrigt"
-                                   select (expense, category);
+                                   let matchingCategory = _categories.FirstOrDefault(c => c.IsMatch(expense))
+                                   let categoryName = matchingCategory?.Name ?? ExpensePresentation.DefaultCategory
+                                   select (expense, categoryName);
             var groups = categoryExpenses
-                .OrderBy(c => c.category)
-                .GroupBy(c => c.category)
+                .OrderBy(c => c.categoryName)
+                .GroupBy(c => c.categoryName)
                 .Select(g => (Category: g.Key, Expenses: g.Select(e => e.expense).ToArray()));
 
             var results = groups.Select(g => new CategoryResultsPresentation(g.Category, g.Expenses));

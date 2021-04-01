@@ -14,14 +14,22 @@ using System.Windows.Shapes;
 
 namespace Expensez {
     /// <summary>
-    /// Interaction logic for NewCategoryWindow.xaml
+    /// Interaction logic for EditCategoryWindow.xaml
     /// </summary>
-    public partial class NewCategoryWindow : Window {
-        public NewCategoryWindow() {
+    public partial class EditCategoryWindow : Window {
+        public EditCategoryWindow() {
             InitializeComponent();
         }
 
-        public string CategoryName => _categoryName.Text.Trim();
+        public string CategoryName { 
+            get => _categoryName.Text.Trim();
+            set => _categoryName.Text = value.Trim();        
+        }
+
+        public string[] Patterns { 
+            get => _patterns.Text.Trim().Split(Environment.NewLine).Where(s => !string.IsNullOrEmpty(s)).ToArray();
+            set => _patterns.Text = string.Join(Environment.NewLine, value).Trim();
+        }
 
         private void OnOK(object sender, RoutedEventArgs e) {
             this.DialogResult = true;

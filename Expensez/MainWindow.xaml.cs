@@ -22,22 +22,10 @@ namespace Expensez {
             InitializeComponent();
             this.DataContext = new MainPresentation(new ExpenseRepository(), new CategoryRepository());
             this.Loaded += (s, e) => Presentation.Load();
+            NameScope.SetNameScope(_expensesMenu, NameScope.GetNameScope(this));
         }
 
         MainPresentation Presentation => this.DataContext as MainPresentation;
 
-        private void DataGrid_KeyDown(object sender, KeyEventArgs e) {
-            //if (e.Key >= Key.D0 && e.Key <= Key.Enter)
-        }
-
-        private void DataGrid_PreviewKeyDown(object sender, KeyEventArgs e) {
-
-        }
-
-        private void SelectedTabChanged(object sender, SelectionChangedEventArgs e) {
-            if (_mainTab.SelectedItem == _resultsTab ) {
-                //Presentation.Results.CalculateResults();
-            }
-        }
     }
 }

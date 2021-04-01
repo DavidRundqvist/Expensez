@@ -8,57 +8,41 @@ using System.Text;
 namespace Expensez {
     public class CategoryRepository {
 
-        private Dictionary<string, string> _cache = new Dictionary<string, string>();
+        private List<Category> _cache = new();
 
         private readonly string _fileStorage = $"{Constants.RootFolder}\\categories.json";
 
-        public Category[] AllCategories => new[] { "Restaurang", "Livsmedel", "Bil", "Boende" }
-            .Select((name, index) => new Category(name, index)).ToArray();
+        internal void Add(Category category) {
+            _cache.Add(category);
+            Save();            
+        }
 
-        internal void SetCategory(string category, params string[] recipients) {
-            foreach(var recipient in recipients) {
-                _cache[recipient] = category;
+        public Category[] Load() {
+            if (!_cache.Any()) {
+                LoadCategories();
             }
-            SaveCategories();            
-        }
-
-        private void SaveCategories() {
-            var jsonData = JsonConvert.SerializeObject(_cache, Newtonsoft.Json.Formatting.Indented);
-            File.WriteAllText(_fileStorage, jsonData);
-        }
-
-        public IDictionary<string, string> Load() {
-            LoadCategories();
-            return _cache;
+            return _cache.ToArray();
         }
 
         private void LoadCategories() {
             if (File.Exists(_fileStorage)) {
                 var jsonData = File.ReadAllText(_fileStorage);
-                _cache = JsonConvert.DeserializeObject<Dictionary<string, string>>(jsonData);
+                _cache = JsonConvert.DeserializeObject<List<Category>>(jsonData);
             }
+        }
+
+        internal void Save() {
+            var jsonData = JsonConvert.SerializeObject(_cache, Formatting.Indented);
+            File.WriteAllText(_fileStorage, jsonData);
+        }
+
+        internal void Delete(Category category) {
+            _cache.Remove(category);
+            Save();
         }
     }
 
     public record RecipientCategory(string Recipient, string Category);
 
     public record ExpenseCategory(string Recipient, string Date, string Category);
-
-
-
-
-
-    public class Category {
-        public string Name { get; }
-        public int Index { get; }
-
-        public override string ToString() {
-            return $"{Index}. {Name}";
-        }
-
-        public Category(string name, int index) {
-            Name = name;
-            Index = index;
-        }
-    }
 }

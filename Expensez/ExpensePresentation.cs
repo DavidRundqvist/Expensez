@@ -30,6 +30,8 @@ namespace Expensez {
 
         public string Color => IsCategorized ? Colors.LightGreen.ToString() : Colors.White.ToString();
 
+        public Expense Expense => _expense;
+
         public string Category { 
             get => _category;
             set {

@@ -1,13 +1,11 @@
 ﻿using System;
 using System.Windows.Input;
 
-namespace Expensez {
+namespace Expensez.Commands {
     public class NewCategoryCommand : ICommand {
         private readonly MainPresentation _mainPresentation;
 
         public event EventHandler CanExecuteChanged;
-
-        public string Header { get; } = "New...";
 
         public NewCategoryCommand(MainPresentation mainPresentation) {
             _mainPresentation = mainPresentation;
@@ -18,9 +16,10 @@ namespace Expensez {
         }
 
         public void Execute(object parameter) {
-            var dlg = new NewCategoryWindow();
+            var dlg = new EditCategoryWindow();
             if (dlg.ShowDialog() == true && !string.IsNullOrEmpty(dlg.CategoryName)) {
-                _mainPresentation.SetCategory(dlg.CategoryName);
+                var category = new Category(dlg.CategoryName, dlg.Patterns);
+                _mainPresentation.AddCategory(category);
             }
         }
     }

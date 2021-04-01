@@ -15,18 +15,57 @@
         <Style x:Key="ColumnElementStyle" TargetType="TextBlock">
             <Setter Property="Margin" Value="5,0,15,0" />
         </Style>
+        <Style TargetType="Button">
+            <Setter Property="Width" Value="Auto" />
+            <!--<Setter Property="Margin" Value="5" />-->
+        </Style>
+
     </Window.Resources>
 
-    <TabControl x:Name="_mainTab" SelectionChanged="SelectedTabChanged">
+    <TabControl x:Name="_mainTab">
 
         <TabItem Header="Categorization" IsSelected="True">
 
             <Grid>
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="100"></ColumnDefinition>
+                    <ColumnDefinition Width="200"></ColumnDefinition>
                     <ColumnDefinition Width="*"></ColumnDefinition>
                 </Grid.ColumnDefinitions>
 
+                <!-- Categories -->
+                <StackPanel Grid.Column="0">
+                    <ListView 
+                        x:Name="_categoriesList"
+                        Margin="10"
+                        ItemsSource="{Binding Categories}">
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding Name}"></TextBlock>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+                    <Grid Margin="10,0,10,0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition Width="5"/>
+                            <ColumnDefinition/>
+                            <ColumnDefinition Width="5"/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        <Button 
+                            Grid.Column="0" 
+                            Command="{Binding NewCategoryCommand}">New...</Button>
+                        <Button 
+                            Grid.Column="2"
+                            Command="{Binding EditCategoryCommand}"
+                            CommandParameter="{Binding SelectedItem, ElementName=_categoriesList}">Edit...</Button>
+                        <Button 
+                            Grid.Column="4"
+                            Command="{Binding DeleteCategoryCommand}"
+                            CommandParameter="{Binding SelectedItem, ElementName=_categoriesList}">Delete...</Button>
+                    </Grid>
+                 </StackPanel>
+                
 
 
 
@@ -34,17 +73,13 @@
 
                 <!-- Expenses -->
                 <DataGrid
-            x:Name="_expenseGrid"
-                Grid.Column="1"
-                KeyDown="DataGrid_KeyDown"
-                PreviewKeyDown="DataGrid_PreviewKeyDown"
-                ItemsSource="{Binding Expenses}"
-                GridLinesVisibility="None"
-                SelectionMode="Extended"   
-            AutoGenerateColumns="False"
-            FontSize="18"
-                  
-                      >
+                    x:Name="_expenseGrid"
+                    Grid.Column="1"
+                    ItemsSource="{Binding Expenses}"
+                    GridLinesVisibility="None"
+                    SelectionMode="Extended"   
+                    AutoGenerateColumns="False"
+                    FontSize="18">
 
                     <DataGrid.RowStyle>
                         <Style TargetType="{x:Type DataGridRow}">
@@ -54,13 +89,13 @@
                     </DataGrid.RowStyle>
 
 
-                    <DataGrid.ContextMenu>
-                        <ContextMenu ItemsSource="{Binding CategoryCommands}">
-                            <ContextMenu.ItemContainerStyle>
-                                <Style TargetType="{x:Type MenuItem}">
-                                    <Setter Property="Header" Value="{Binding Header}"/>
-                                </Style>
-                            </ContextMenu.ItemContainerStyle>
+                    <DataGrid.ContextMenu >
+                        <ContextMenu x:Name="_expensesMenu" ItemsSource="{Binding CategoryCommands}">
+                            <ContextMenu.ItemTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding Header}"></TextBlock>
+                                </DataTemplate>
+                            </ContextMenu.ItemTemplate>
                         </ContextMenu>
                     </DataGrid.ContextMenu>
 
