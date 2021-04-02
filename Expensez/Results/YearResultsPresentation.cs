@@ -13,16 +13,14 @@ namespace Expensez.Results {
         public YearResultsPresentation(int year, Expense[] expenses, Category[] categories) {
             _year = year;
 
-            var categoryExpenses = from expense in expenses
-                                   let matchingCategory = categories.Concat(new[] { Constants.DefaultCategory.Category }).First(c => c.IsMatch(expense))
-                                   let categoryName = matchingCategory.Name
-                                   select (expense, categoryName);
-            var groups = categoryExpenses
-                .OrderBy(c => c.categoryName)
-                .GroupBy(c => c.categoryName)
-                .Select(g => (Category: g.Key, Expenses: g.Select(e => e.expense).ToArray()));
+            var allCategories = categories.Concat(new[] { Constants.DefaultCategory.Category });
+            var categorization = expenses.Select(e => (Expense: e, Category: allCategories.First(c => c.IsMatch(e)))).ToArray();
 
-            var results = groups.Select(g => new CategoryResultsPresentation(g.Category, g.Expenses));
+            var results = categories
+                .Select(c => new CategoryResultsPresentation(c.Name, 
+                    categorization
+                    .Where(i => i.Category == c)
+                    .Select(i => i.Expense).ToArray()));
 
             Categories.AddRange(results);                                
         }
