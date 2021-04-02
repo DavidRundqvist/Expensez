@@ -8,18 +8,14 @@ using System.Threading.Tasks;
 
 namespace Expensez.Results {
     public class YearResultsPresentation : INotifyPropertyChanged {
-        private int _year;
-        private Expense[] _expenses;
-        private Category[] _categories;
+        private readonly int _year;
 
         public YearResultsPresentation(int year, Expense[] expenses, Category[] categories) {
             _year = year;
-            _expenses = expenses;
-            _categories = categories;
 
             var categoryExpenses = from expense in expenses
-                                   let matchingCategory = _categories.FirstOrDefault(c => c.IsMatch(expense))
-                                   let categoryName = matchingCategory?.Name ?? ExpensePresentation.DefaultCategory
+                                   let matchingCategory = categories.Concat(new[] { Constants.DefaultCategory.Category }).First(c => c.IsMatch(expense))
+                                   let categoryName = matchingCategory.Name
                                    select (expense, categoryName);
             var groups = categoryExpenses
                 .OrderBy(c => c.categoryName)

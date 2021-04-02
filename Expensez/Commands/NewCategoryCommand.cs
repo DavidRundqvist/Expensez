@@ -18,7 +18,7 @@ namespace Expensez.Commands {
         public void Execute(object parameter) {
             var dlg = new EditCategoryWindow();
             if (dlg.ShowDialog() == true && !string.IsNullOrEmpty(dlg.CategoryName)) {
-                var category = new Category(dlg.CategoryName, dlg.Patterns);
+                var category = new Category(dlg.CategoryName, dlg.Color, dlg.Patterns);
                 _mainPresentation.AddCategory(category);
             }
         }

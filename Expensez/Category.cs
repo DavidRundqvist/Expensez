@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Text.RegularExpressions;
+using System.Windows.Media;
 
 namespace Expensez {
 
@@ -8,6 +9,8 @@ namespace Expensez {
         private Regex[] _regexes;
 
         public string Name { get; set; }
+
+        public string Color { get; set; } = Colors.LightGreen.ToString();
 
         public string[] Patterns {
             get => _regexes.Select(r => r.ToString()).ToArray();
@@ -23,8 +26,9 @@ namespace Expensez {
             _regexes = Array.Empty<Regex>();
         }
 
-        public Category(string name, string[] patterns) {
+        public Category(string name, string color, string[] patterns) {
             Name = name;
+            Color = color;
             Patterns = patterns;
         }
 

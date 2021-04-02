@@ -20,6 +20,17 @@ namespace Expensez {
                 }
             }
         }
+
+        public string Color {
+            get => _category.Color;
+            set {
+                if (_category.Color != value) {
+                    _category.Color = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Color)));
+                }
+            }
+        }
+
         public string[] Patterns {
             get => _category.Patterns;
             set => _category.Patterns = value;

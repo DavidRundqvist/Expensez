@@ -9,11 +9,10 @@ using System.Text;
 namespace Expensez {
     public class ExpenseRepository {
 
-        private DirectoryInfo _folder = new DirectoryInfo(@"C:\Code\ExpenseData");
 
         public Expense[] Load() {
-            var files = _folder.GetFiles("*.csv");
-            return files.SelectMany(ReadCsv).ToArray();
+            var files = new DirectoryInfo(Constants.RootFolder).GetFiles("*.csv");
+            return files.SelectMany(ReadCsv).OrderByDescending(e => e.Date).ToArray();
         }
 
 

@@ -8,10 +8,9 @@ using System.Windows.Media;
 namespace Expensez {
     public class ExpensePresentation : INotifyPropertyChanged {
 
-        public const string DefaultCategory = "Övrigt";
 
         private readonly Expense _expense;
-        private string _category = DefaultCategory;
+        private CategoryPresentation _category = Constants.DefaultCategory;
 
         public ExpensePresentation(Expense expense) {
             _expense = expense;
@@ -26,23 +25,21 @@ namespace Expensez {
 
         public decimal Amount => _expense.Amount;
 
-        public bool IsCategorized => this.Category != DefaultCategory;
-
-        public string Color => IsCategorized ? Colors.LightGreen.ToString() : Colors.White.ToString();
-
         public Expense Expense => _expense;
 
-        public string Category { 
+        public CategoryPresentation Category { 
             get => _category;
             set {
                 if (_category != value) {
                     _category = value;
                     PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Category)));
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Color)));
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsCategorized)));
                 }
             }
         }
         public bool IsSelected { get; set; } = false;
+
+        public bool IsCategorized => Category != Constants.DefaultCategory;
 
     }
 }

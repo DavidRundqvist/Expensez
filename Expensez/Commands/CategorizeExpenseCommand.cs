@@ -32,11 +32,13 @@ namespace Expensez.Commands {
 
             var dlg = new EditCategoryWindow {
                 CategoryName = _category.Name,
+                Color = _category.Color,
                 Patterns = _category.Patterns.Concat(recipients).ToArray()
             };
             if (dlg.ShowDialog() == true && !string.IsNullOrEmpty(dlg.CategoryName)) {
                 _category.Name = dlg.CategoryName;
-                _category.Patterns = dlg.Patterns;
+                _category.Color = dlg.Color;
+                _category.Patterns = dlg.Patterns;               
                 _mainPresentation.SaveCategories();
             }
         }

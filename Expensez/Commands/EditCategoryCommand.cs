@@ -22,10 +22,12 @@ namespace Expensez.Commands {
 
             var dlg = new EditCategoryWindow {
                 CategoryName = category.Name,
-                Patterns = category.Patterns
+                Patterns = category.Patterns,
+                Color = category.Color,
             };
             if (dlg.ShowDialog() == true && !string.IsNullOrEmpty(dlg.CategoryName)) {
                 category.Name = dlg.CategoryName;
+                category.Color = dlg.Color;
                 category.Patterns = dlg.Patterns;
                 _mainPresentation.SaveCategories();
             }

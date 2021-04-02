@@ -66,8 +66,8 @@ namespace Expensez {
         }
 
         private void CategorizeExpense(ExpensePresentation e) {
-            var matchingCategory = Categories.FirstOrDefault(c => c.IsMatch(e));
-            e.Category = matchingCategory?.Name ?? ExpensePresentation.DefaultCategory;
+            var matchingCategory = Categories.Concat(new[] { Constants.DefaultCategory }).First(c => c.IsMatch(e));
+            e.Category = matchingCategory;
         }
 
         public void Load() {

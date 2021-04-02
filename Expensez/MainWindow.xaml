@@ -17,9 +17,7 @@
         </Style>
         <Style TargetType="Button">
             <Setter Property="Width" Value="Auto" />
-            <!--<Setter Property="Margin" Value="5" />-->
         </Style>
-
     </Window.Resources>
 
     <TabControl x:Name="_mainTab">
@@ -35,14 +33,25 @@
                 <!-- Categories -->
                 <StackPanel Grid.Column="0">
                     <ListView 
+                        FontSize="18"
                         x:Name="_categoriesList"
                         Margin="10"
                         ItemsSource="{Binding Categories}">
                         <ListView.ItemTemplate>
                             <DataTemplate>
-                                <TextBlock Text="{Binding Name}"></TextBlock>
+                                <Grid >
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="20"></ColumnDefinition>
+                                        <ColumnDefinition Width="Auto"></ColumnDefinition>
+                                    </Grid.ColumnDefinitions>
+                                    <Canvas Grid.Column="0" VerticalAlignment="Center">
+                                        <Rectangle Canvas.Top="-8" Width="16" Height="16" Fill="{Binding Color}"></Rectangle>
+                                    </Canvas>
+                                    <TextBlock Grid.Column="1" Text="{Binding Name}"></TextBlock>
+                                </Grid>
                             </DataTemplate>
                         </ListView.ItemTemplate>
+                        
                     </ListView>
                     <Grid Margin="10,0,10,0">
                         <Grid.ColumnDefinitions>
@@ -84,7 +93,11 @@
                     <DataGrid.RowStyle>
                         <Style TargetType="{x:Type DataGridRow}">
                             <Setter Property="IsSelected" Value="{Binding IsSelected, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-                            <Setter Property="Background" Value="{Binding Color}"></Setter>
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding IsCategorized}" Value="true">
+                                    <Setter Property="Foreground" Value="Gray"></Setter>
+                                </DataTrigger>
+                            </Style.Triggers>
                         </Style>
                     </DataGrid.RowStyle>
 
@@ -105,7 +118,22 @@
                         <DataGridTextColumn Header="Date"       Binding="{Binding Date,         Mode=OneTime}" IsReadOnly="True"  ElementStyle="{StaticResource ColumnElementStyle}"/>
                         <DataGridTextColumn Header="Recipient"  Binding="{Binding Recipient,    Mode=OneTime}" IsReadOnly="True"  ElementStyle="{StaticResource ColumnElementStyle}"/>
                         <DataGridTextColumn Header="Amount"     Binding="{Binding Amount,       Mode=OneTime}" IsReadOnly="True"  ElementStyle="{StaticResource ColumnElementStyle}"/>
-                        <DataGridTextColumn Header="Category"   Binding="{Binding Category,     Mode=TwoWay}"  IsReadOnly="False" ElementStyle="{StaticResource ColumnElementStyle}"/>
+                        <DataGridTemplateColumn Header="Category">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <Grid >
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="20"></ColumnDefinition>
+                                            <ColumnDefinition Width="Auto"></ColumnDefinition>
+                                        </Grid.ColumnDefinitions>
+                                        <Canvas Grid.Column="0" VerticalAlignment="Center">
+                                            <Rectangle Canvas.Top="-8" Width="16" Height="16" Fill="{Binding Category.Color}"></Rectangle>
+                                        </Canvas>
+                                        <TextBlock Grid.Column="1" Text="{Binding Category.Name}"></TextBlock>
+                                    </Grid>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
                     </DataGrid.Columns>
 
 
