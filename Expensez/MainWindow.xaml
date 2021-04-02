@@ -26,7 +26,7 @@
 
             <Grid>
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="200"></ColumnDefinition>
+                    <ColumnDefinition Width="300"></ColumnDefinition>
                     <ColumnDefinition Width="*"></ColumnDefinition>
                 </Grid.ColumnDefinitions>
 
@@ -82,6 +82,7 @@
 
                 <!-- Expenses -->
                 <DataGrid
+                    EnableRowVirtualization="False"
                     x:Name="_expenseGrid"
                     Grid.Column="1"
                     ItemsSource="{Binding Expenses}"
