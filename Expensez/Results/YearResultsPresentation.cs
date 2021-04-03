@@ -13,10 +13,10 @@ namespace Expensez.Results {
         public YearResultsPresentation(int year, Expense[] expenses, Category[] categories) {
             _year = year;
 
-            var allCategories = categories.Concat(new[] { Constants.DefaultCategory.Category });
+            var allCategories = categories.Concat(new[] { Constants.DefaultCategory.Category }).ToArray();
             var categorization = expenses.Select(e => (Expense: e, Category: allCategories.First(c => c.IsMatch(e)))).ToArray();
 
-            var results = categories
+            var results = allCategories
                 .Select(c => new CategoryResultsPresentation(c.Name, 
                     categorization
                     .Where(i => i.Category == c)
