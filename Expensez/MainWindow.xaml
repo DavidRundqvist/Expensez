@@ -3,9 +3,10 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:Expensez" xmlns:results="clr-namespace:Expensez.Results" d:DataContext="{d:DesignInstance Type=local:MainPresentation}"
+        xmlns:local="clr-namespace:Expensez" 
+        xmlns:results="clr-namespace:Expensez.Results" 
+        d:DataContext="{d:DesignInstance Type=local:MainPresentation}"
         mc:Ignorable="d"
-        
         Title="Expense Categorization" 
         Height="450"
         Width="800" 
@@ -26,7 +27,8 @@
 
             <Grid>
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="300"></ColumnDefinition>
+                    <ColumnDefinition Width="350"></ColumnDefinition>
+                    <ColumnDefinition Width="10"></ColumnDefinition>
                     <ColumnDefinition Width="*"></ColumnDefinition>
                 </Grid.ColumnDefinitions>
 
@@ -36,6 +38,7 @@
                         FontSize="18"
                         x:Name="_categoriesList"
                         Margin="10"
+                        MouseDoubleClick="DoubleClickCategory"
                         ItemsSource="{Binding Categories}">
                         <ListView.ItemTemplate>
                             <DataTemplate>
@@ -51,6 +54,11 @@
                                 </Grid>
                             </DataTemplate>
                         </ListView.ItemTemplate>
+                        <ListView.ItemContainerStyle>
+                            <Style TargetType="ListViewItem">
+                                <Setter Property="IsSelected" Value="{Binding IsSelected, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                            </Style>
+                        </ListView.ItemContainerStyle>
                         
                     </ListView>
                     <Grid Margin="10,0,10,0">
@@ -74,9 +82,9 @@
                             CommandParameter="{Binding SelectedItem, ElementName=_categoriesList}">Delete...</Button>
                     </Grid>
                  </StackPanel>
-                
 
 
+                <GridSplitter Grid.Column="1" Width="10" HorizontalAlignment="Stretch"></GridSplitter>
 
 
 
@@ -84,11 +92,12 @@
                 <DataGrid
                     EnableRowVirtualization="False"
                     x:Name="_expenseGrid"
-                    Grid.Column="1"
+                    Grid.Column="2"
                     ItemsSource="{Binding Expenses}"
                     GridLinesVisibility="None"
                     SelectionMode="Extended"   
                     AutoGenerateColumns="False"
+                    Margin="10"
                     FontSize="18">
 
                     <DataGrid.RowStyle>

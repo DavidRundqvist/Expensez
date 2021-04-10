@@ -21,6 +21,9 @@ namespace Expensez {
             }
         }
 
+        public bool IsSelected { get; set; } = false;
+
+
         public string Color {
             get => _category.Color;
             set {

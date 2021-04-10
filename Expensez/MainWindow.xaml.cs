@@ -27,5 +27,8 @@ namespace Expensez {
 
         MainPresentation Presentation => this.DataContext as MainPresentation;
 
+        private void DoubleClickCategory(object sender, MouseButtonEventArgs e) {
+            Presentation.EditCategoryCommand.Execute(_categoriesList.SelectedItem);
+        }
     }
 }

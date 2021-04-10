@@ -46,6 +46,8 @@ namespace Expensez {
 
         public ExpensePresentation[] SelectedExpenses => Expenses.Where(e => e.IsSelected).ToArray();
 
+        public CategoryPresentation[] SelectedCategories => Categories.Where(e => e.IsSelected).ToArray();
+
         public ResultsPresentation Results => _results;
 
         private void CategoriesChanged(object sender, NotifyCollectionChangedEventArgs e) {
