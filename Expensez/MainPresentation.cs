@@ -14,22 +14,25 @@ namespace Expensez {
 
 
     public class MainPresentation : INotifyPropertyChanged {
-        private readonly ExpenseRepository _repository;
-        private readonly CategoryRepository _categories;
+        private readonly ExpenseRepository _expenseRepository;
+        private readonly CategoryRepository _categoryRepository;
+        private readonly Categorizer _categorizer;
         private readonly ICommand _newCategoryCommand;
         private readonly ICommand _editCategoryCommand;
         private readonly ICommand _deleteCategoryCommand;
         private readonly ICommand _newExpenseCategoryCommand;
         private readonly ResultsPresentation _results;
 
-        public MainPresentation(ExpenseRepository repository, CategoryRepository categories) {
-            _repository = repository;
-            _categories = categories;
+        public MainPresentation(ExpenseRepository expenseRepository, CategoryRepository categoryRepository) {
+            _expenseRepository = expenseRepository;
+            _categoryRepository = categoryRepository;
+            _categorizer = new Categorizer(categoryRepository);
             _newCategoryCommand = new NewCategoryCommand(this);
             _editCategoryCommand = new EditCategoryCommand(this);
             _deleteCategoryCommand = new DeleteCategoryCommand(this);
             _newExpenseCategoryCommand = new NewExpenseCategoryCommand(this);
-            _results = new ResultsPresentation(repository, categories);
+
+            _results = new ResultsPresentation(_categorizer, _expenseRepository);
             Categories.CollectionChanged += CategoriesChanged;
         }
 
@@ -56,47 +59,36 @@ namespace Expensez {
         }
 
         internal void AddCategory(Category category) {
-            _categories.Add(category);
+            _categoryRepository.Add(category);
             Categories.Add(new CategoryPresentation(category));
-            CategorizeExpenses();
-        }
-
-        private void CategorizeExpenses() {
-            foreach(var e in Expenses) {
-                CategorizeExpense(e);
-            }
-        }
-
-        private void CategorizeExpense(ExpensePresentation e) {
-            var matchingCategory = Categories.Concat(new[] { Constants.DefaultCategory }).First(c => c.IsMatch(e));
-            e.Category = matchingCategory;
+            _categorizer.Categorize(Expenses);            
         }
 
         public void Load() {
             LoadCategories();
             LoadExpenses();
-            CategorizeExpenses();
+            _categorizer.Categorize(Expenses);
         }
 
         internal void DeleteCategory(CategoryPresentation category) {
             Categories.Remove(category);
-            _categories.Delete(category.Category);
-            CategorizeExpenses();
+            _categoryRepository.Delete(category.Category);
+            _categorizer.Categorize(Expenses);
         }
 
         private void LoadCategories() {
-            var categories = _categories.Load();
+            var categories = _categoryRepository.Load();
             Categories.Clear();
             Categories.AddRange(categories.Select(c => new CategoryPresentation(c)));
         }
 
         internal void SaveCategories() {
-            _categories.Save();
-            CategorizeExpenses();
+            _categoryRepository.Save();
+            _categorizer.Categorize(Expenses);
         }
 
         private void LoadExpenses() {
-            var expenses = _repository.Load();
+            var expenses = _expenseRepository.Load();
             var presentations = expenses.Select(e => new ExpensePresentation(e)).ToArray();
             Expenses.Clear();
             Expenses.AddRange(presentations);

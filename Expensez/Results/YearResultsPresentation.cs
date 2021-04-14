@@ -10,11 +10,11 @@ namespace Expensez.Results {
     public class YearResultsPresentation : INotifyPropertyChanged {
         private readonly int _year;
 
-        public YearResultsPresentation(int year, Expense[] expenses, Category[] categories) {
+        public YearResultsPresentation(int year, Expense[] expenses, Categorizer categorizer) {
             _year = year;
 
-            var allCategories = categories.Concat(new[] { Constants.DefaultCategory.Category }).ToArray();
-            var categorization = expenses.Select(e => (Expense: e, Category: allCategories.First(c => c.IsMatch(e)))).ToArray();
+            var allCategories = categorizer.GetAllCategories();
+            var categorization = categorizer.Categorize(expenses);
 
             var results = allCategories
                 .Select(c => new CategoryResultsPresentation(c.Name, 

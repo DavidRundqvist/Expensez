@@ -8,22 +8,22 @@ using System.Threading.Tasks;
 
 namespace Expensez.Results {
     public class ResultsPresentation : INotifyPropertyChanged {
-        private ExpenseRepository _expenses;
-        private CategoryRepository _categories;
+        private readonly Categorizer _categorizer;
+        private readonly ExpenseRepository _expenseRepository;
 
-        public ResultsPresentation(ExpenseRepository expenses, CategoryRepository categories) {
-            _expenses = expenses;
-            _categories = categories;
+        public ResultsPresentation(Categorizer categorizer, ExpenseRepository expenseRepository) {
+            _categorizer = categorizer;
+            _expenseRepository = expenseRepository;
         }
 
         public void CalculateResults() {
             Years.Clear();
 
-            var expenses = _expenses.Load();
-            var categories = _categories.Load();
+            var expenses = _expenseRepository.Load();
 
             var expensesPerYear = expenses.GroupBy(e => e.Date.Year);
-            var yearPresentations = expensesPerYear.Select(yearExpense => new YearResultsPresentation(yearExpense.Key, yearExpense.ToArray(), categories));
+            var yearPresentations = expensesPerYear
+                .Select(yearExpense => new YearResultsPresentation(yearExpense.Key, yearExpense.ToArray(), _categorizer));
             Years.AddRange(yearPresentations);
 
         }

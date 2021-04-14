@@ -40,8 +40,5 @@ namespace Expensez {
         }
         public Category Category => _category;
 
-        internal bool IsMatch(ExpensePresentation e) {
-            return _category.IsMatch(e.Expense);
-        }
     }
 }

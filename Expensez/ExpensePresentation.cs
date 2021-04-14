@@ -10,7 +10,7 @@ namespace Expensez {
 
 
         private readonly Expense _expense;
-        private CategoryPresentation _category = Constants.DefaultCategory;
+        private Category _category = Constants.DefaultCategory;
 
         public ExpensePresentation(Expense expense) {
             _expense = expense;
@@ -27,7 +27,7 @@ namespace Expensez {
 
         public Expense Expense => _expense;
 
-        public CategoryPresentation Category { 
+        public Category Category { 
             get => _category;
             set {
                 if (_category != value) {
