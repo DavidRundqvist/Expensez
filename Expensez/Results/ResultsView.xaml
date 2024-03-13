@@ -14,40 +14,42 @@
         </Style>
     </UserControl.Resources>
 
-    <StackPanel>
-        <Button FontSize="18" Width="Auto" Margin="20" HorizontalAlignment="Left" Click="CalculateClick">Calculate</Button>
-        
-        <ItemsControl ItemsSource="{Binding Years}" >
+    <ScrollViewer>
+        <StackPanel>
+            <Button FontSize="18" Width="Auto" Margin="20" HorizontalAlignment="Left" Click="CalculateClick">Calculate</Button>
 
-            <ItemsControl.ItemTemplate>
-                <DataTemplate>
-                    <StackPanel Margin="0,20,0,0">
-                        <TextBlock FontSize="18" Text="{Binding Header}"></TextBlock>
-                        <DataGrid GridLinesVisibility="None"  FontSize="18" ItemsSource="{Binding Categories}">
-                            <DataGrid.ColumnHeaderStyle>
-                                <Style TargetType="{x:Type DataGridColumnHeader}">
-                                    <Setter Property="Padding" Value="20,5,20,5"/>
-                                </Style>
-                            </DataGrid.ColumnHeaderStyle>
-                            <DataGrid.CellStyle>
-                                <Style TargetType="{x:Type DataGridCell}">
-                                    <Setter Property="BorderBrush" Value="Gray"></Setter>
-                                    <Setter Property="BorderThickness" Value="0.2"></Setter>
-                                </Style>
-                            </DataGrid.CellStyle>
+            <ItemsControl ItemsSource="{Binding Years}" >
 
-                            <DataGrid.ContextMenu>
-                                <ContextMenu>
-                                    <MenuItem Command="Copy"/>
-                                </ContextMenu>
-                            </DataGrid.ContextMenu>
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel Margin="0,20,0,0">
+                            <TextBlock FontSize="18" Text="{Binding Header}"></TextBlock>
+                            <DataGrid GridLinesVisibility="None"  FontSize="18" ItemsSource="{Binding Categories}">
+                                <DataGrid.ColumnHeaderStyle>
+                                    <Style TargetType="{x:Type DataGridColumnHeader}">
+                                        <Setter Property="Padding" Value="20,5,20,5"/>
+                                    </Style>
+                                </DataGrid.ColumnHeaderStyle>
+                                <DataGrid.CellStyle>
+                                    <Style TargetType="{x:Type DataGridCell}">
+                                        <Setter Property="BorderBrush" Value="Gray"></Setter>
+                                        <Setter Property="BorderThickness" Value="0.2"></Setter>
+                                    </Style>
+                                </DataGrid.CellStyle>
 
-                        </DataGrid>
-                    </StackPanel>
-                </DataTemplate>
+                                <DataGrid.ContextMenu>
+                                    <ContextMenu>
+                                        <MenuItem Command="Copy"/>
+                                    </ContextMenu>
+                                </DataGrid.ContextMenu>
 
-            </ItemsControl.ItemTemplate>
+                            </DataGrid>
+                        </StackPanel>
+                    </DataTemplate>
 
-        </ItemsControl>
-    </StackPanel>
+                </ItemsControl.ItemTemplate>
+
+            </ItemsControl>
+        </StackPanel>
+    </ScrollViewer>
 </UserControl>
