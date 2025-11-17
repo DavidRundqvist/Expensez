@@ -1,0 +1,69 @@
+<UserControl
+    x:Class="Expensez.Categorization"
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    x:DataType="local:CategorizationPresentation"
+    xmlns:local="clr-namespace:Expensez"    >
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="350" />
+            <ColumnDefinition Width="10" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+
+        <!--  Categories  -->
+        <StackPanel Grid.Column="0">
+            <ListBox
+                x:Name="_categoriesList"
+                Margin="10"
+                FontSize="18"                
+                >
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="20" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+                            <!-- <Canvas Grid.Column="0" VerticalAlignment="Center">
+                                <Rectangle
+                                    Canvas.Top="-8"
+                                    Width="16"
+                                    Height="16"
+                                    Fill="{Binding Color}" />
+                            </Canvas>
+                            <TextBlock Grid.Column="1" Text="{Binding Name}" /> -->
+                        </Grid>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+                <!-- <ListView.ItemContainerStyle>
+                    <Style TargetType="ListViewItem">
+                        <Setter Property="IsSelected" Value="{Binding IsSelected, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                    </Style>
+                </ListView.ItemContainerStyle> -->
+
+            </ListBox>
+            <Grid Margin="10,0,10,0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition Width="5" />
+                    <ColumnDefinition />
+                    <ColumnDefinition Width="5" />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+                <Button Grid.Column="0" Command="{Binding NewCategoryCommand}">New...</Button>
+                <!-- <Button
+                    Grid.Column="2"
+                    Command="{Binding EditCategoryCommand}"
+                    CommandParameter="{Binding SelectedItem, ElementName=_categoriesList}">
+                    Edit...
+                </Button>
+                <Button
+                    Grid.Column="4"
+                    CommandParameter="{Binding SelectedItem, ElementName=_categoriesList}">
+                    Delete...
+                </Button>  -->
+            </Grid>
+        </StackPanel>
+    </Grid>
+</UserControl>
