@@ -8,14 +8,14 @@
     x:DataType="local:MainPresentation"
     xmlns:local="clr-namespace:Expensez"    
     Title="Expensez"
-    d:DesignHeight="450"
-    d:DesignWidth="800"
+    d:DesignHeight="450"    
+    d:DesignWidth="800"    
     mc:Ignorable="d">
 
     <TabControl x:Name="_mainTab">
 
         <TabItem Header="Categorization" IsSelected="True">
-            <e:Categorization DataContext="{Binding Categorization}"/>
+            <e:Categorization Margin="10" DataContext="{Binding Categorization}"/>
         </TabItem>
 
         <TabItem Header="Results" IsSelected="False" />

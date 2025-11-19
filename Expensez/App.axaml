@@ -1,10 +1,14 @@
-<Application xmlns="https://github.com/avaloniaui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             x:Class="Expensez.App"
-             RequestedThemeVariant="Default">
-             <!-- "Default" ThemeVariant follows system theme variant. "Dark" or "Light" are other available options. -->
-
+<Application
+    x:Class="Expensez.App"
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    RequestedThemeVariant="Default">
+    <!--  "Default" ThemeVariant follows system theme variant. "Dark" or "Light" are other available options.  -->
+    <Application.Resources>
+        <x:Double x:Key="ControlContentThemeFontSize">14</x:Double>
+    </Application.Resources>
     <Application.Styles>
         <FluentTheme />
+
     </Application.Styles>
 </Application>

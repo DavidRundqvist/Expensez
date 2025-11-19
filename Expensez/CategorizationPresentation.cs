@@ -1,5 +1,6 @@
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Linq;
 using System.Windows.Input;
 using Expensez.Commands;
 
@@ -12,14 +13,18 @@ public class CategorizationPresentation : INotifyPropertyChanged
     private readonly ICommand _newCategoryCommand;
 
     public ICommand NewCategoryCommand => _newCategoryCommand;
-    public ObservableCollection<CategoryPresentation> Categories { get; }
+    public ObservableCollection<CategoryPresentation> Categories { get; } = [];
 
-    public CategorizationPresentation()
+    public CategorizationPresentation(CategoryRepository categoryRepository)
     {
         _newCategoryCommand = new NewCategoryCommand(this);
-        Categories = [
-            new(new("Mat", "Blue")),
-            new(new("Bil", "Orange")),
-            new(new("Kläder", "Green"))];
+        
+        Categories.AddRange(categoryRepository.Load().Select(c => new CategoryPresentation(c)));
+
+
+        // Categories = [
+        //     new(new("Mat", "Blue")),
+        //     new(new("Bil", "Orange")),
+        //     new(new("Kläder", "Green"))];
     }
 }

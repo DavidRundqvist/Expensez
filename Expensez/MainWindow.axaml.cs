@@ -4,9 +4,9 @@ namespace Expensez;
 
 public partial class MainWindow : Window
 {
-    public MainWindow()
+    public MainWindow(MainPresentation presentation)
     {
         InitializeComponent();
-        this.DataContext = new MainPresentation();
+        this.DataContext = presentation;
     }
 }

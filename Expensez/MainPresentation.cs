@@ -4,9 +4,9 @@ namespace Expensez;
 
 public class MainPresentation : INotifyPropertyChanged
 {
-    public MainPresentation()
+    public MainPresentation(ExpenseRepository expenseRepository, CategoryRepository categoryRepository)
     {
-        Categorization = new CategorizationPresentation();
+        Categorization = new CategorizationPresentation(categoryRepository);
     }
 
     public event PropertyChangedEventHandler? PropertyChanged;

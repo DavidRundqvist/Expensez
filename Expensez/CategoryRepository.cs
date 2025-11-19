@@ -10,7 +10,7 @@ namespace Expensez {
 
         private List<Category> _cache = new();
 
-        private readonly string _fileStorage = $"{Constants.RootFolder}\\categories.json";
+        private readonly string _fileStorage = $"{Constants.RootFolder}/categories.json";
 
         internal void Add(Category category) {
             _cache.Add(category);
