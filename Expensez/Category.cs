@@ -31,6 +31,6 @@ namespace Expensez {
             Patterns = patterns;
         }
 
-        //public bool MatchesRecipient(Expense expense) => _regexes.Any(r => r.IsMatch(expense.Recipient));
+        public bool MatchesRecipient(Expense expense) => _regexes.Any(r => r.IsMatch(expense.Recipient));
     }
 }
