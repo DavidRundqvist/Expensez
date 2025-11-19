@@ -8,5 +8,6 @@ public partial class MainWindow : Window
     {
         InitializeComponent();
         this.DataContext = presentation;
+        this.Loaded += (s,e) => presentation.Load();
     }
 }

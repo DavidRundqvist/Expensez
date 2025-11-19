@@ -42,7 +42,7 @@ namespace Expensez {
             reader.ReadLine();
             reader.ReadLine();
             reader.ReadLine();
-            using var csv = new CsvReader(reader, CultureInfo.CurrentCulture);
+            using var csv = new CsvReader(reader, new CultureInfo("sv-se"));
             var records = csv.GetRecords<CsvExpense>().ToArray();
 
             return records

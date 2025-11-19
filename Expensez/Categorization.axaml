@@ -2,11 +2,12 @@
     x:Class="Expensez.Categorization"
     xmlns="https://github.com/avaloniaui"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    x:DataType="local:CategorizationPresentation"
-    xmlns:local="clr-namespace:Expensez"    >
+    xmlns:dg="clr-namespace:Avalonia.Controls;assembly=Avalonia.Controls.DataGrid"
+    xmlns:local="clr-namespace:Expensez"
+    x:DataType="local:CategorizationPresentation">
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="300"/>
+            <ColumnDefinition Width="300" />
             <ColumnDefinition Width="10" />
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
@@ -14,14 +15,13 @@
         <!--  Categories  -->
         <Grid Grid.Column="0">
             <Grid.RowDefinitions>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="auto"/>
+                <RowDefinition Height="*" />
+                <RowDefinition Height="auto" />
             </Grid.RowDefinitions>
             <ListBox
-                Grid.Row="0"
                 x:Name="_categoriesList"
+                Grid.Row="0"
                 Margin="10"
-                
                 ItemsSource="{Binding Categories}">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
@@ -37,7 +37,7 @@
                                     Height="16"
                                     Fill="{Binding Color}" />
                             </Canvas>
-                            <TextBlock Grid.Column="1" Text="{Binding Name}" /> 
+                            <TextBlock Grid.Column="1" Text="{Binding Name}" />
                         </Grid>
                     </DataTemplate>
                 </ListBox.ItemTemplate>
@@ -45,7 +45,7 @@
                     <Style TargetType="ListViewItem">
                         <Setter Property="IsSelected" Value="{Binding IsSelected, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                     </Style>
-                </ListView.ItemContainerStyle> -->
+                </ListView.ItemContainerStyle>-->
 
             </ListBox>
             <Grid Grid.Row="1" Margin="10,0,10,0">
@@ -67,10 +67,19 @@
                     Grid.Column="4"
                     CommandParameter="{Binding SelectedItem, ElementName=_categoriesList}">
                     Delete...
-                </Button>  -->
+                </Button>-->
             </Grid>
         </Grid>
 
 
+
+        <!--  Expensez  -->
+        <dg:DataGrid Grid.Column="2" AutoGenerateColumns="False" ItemsSource="{Binding Expenses}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+            <dg:DataGrid.Columns>
+                <dg:DataGridTextColumn Binding="{Binding Date}" Header="Date" />
+                <dg:DataGridTextColumn Binding="{Binding Recipient}" Header="Recipient" />
+                <dg:DataGridTextColumn Binding="{Binding Amount}" Header="Amount" />
+            </dg:DataGrid.Columns>
+        </dg:DataGrid>
     </Grid>
 </UserControl>

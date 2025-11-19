@@ -14,7 +14,7 @@ namespace Expensez {
         public event PropertyChangedEventHandler? PropertyChanged;
 
 
-        public string Date => _expense.Date.ToShortDateString();
+        public string Date => _expense.Date.ToString("yyyy-MM-dd");
 
         public string Recipient => _expense.Recipient;
 
