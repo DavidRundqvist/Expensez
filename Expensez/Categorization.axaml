@@ -6,7 +6,7 @@
     xmlns:local="clr-namespace:Expensez"    >
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="350" />
+            <ColumnDefinition Width="300"/>
             <ColumnDefinition Width="10" />
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
@@ -16,8 +16,8 @@
             <ListBox
                 x:Name="_categoriesList"
                 Margin="10"
-                FontSize="18"                
-                >
+                FontSize="18"                               
+                ItemsSource="{Binding Categories}">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
                         <Grid>
@@ -25,14 +25,14 @@
                                 <ColumnDefinition Width="20" />
                                 <ColumnDefinition Width="Auto" />
                             </Grid.ColumnDefinitions>
-                            <!-- <Canvas Grid.Column="0" VerticalAlignment="Center">
+                            <Canvas Grid.Column="0" VerticalAlignment="Center">
                                 <Rectangle
                                     Canvas.Top="-8"
                                     Width="16"
                                     Height="16"
                                     Fill="{Binding Color}" />
                             </Canvas>
-                            <TextBlock Grid.Column="1" Text="{Binding Name}" /> -->
+                            <TextBlock Grid.Column="1" Text="{Binding Name}" /> 
                         </Grid>
                     </DataTemplate>
                 </ListBox.ItemTemplate>
@@ -65,5 +65,7 @@
                 </Button>  -->
             </Grid>
         </StackPanel>
+
+        
     </Grid>
 </UserControl>
