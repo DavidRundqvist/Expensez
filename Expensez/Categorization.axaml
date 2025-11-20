@@ -74,12 +74,28 @@
 
 
         <!--  Expensez  -->
-        <dg:DataGrid Grid.Column="2" AutoGenerateColumns="False" ItemsSource="{Binding Expenses}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+        <dg:DataGrid
+            Grid.Column="2"
+            HorizontalAlignment="Stretch"
+            VerticalAlignment="Stretch"
+            AutoGenerateColumns="False"
+            ItemsSource="{Binding Expenses}">
             <dg:DataGrid.Columns>
                 <dg:DataGridTextColumn Binding="{Binding Date}" Header="Date" />
                 <dg:DataGridTextColumn Binding="{Binding Recipient}" Header="Recipient" />
                 <dg:DataGridTextColumn Binding="{Binding Amount}" Header="Amount" />
             </dg:DataGrid.Columns>
+
+            <dg:DataGrid.ContextMenu>
+                <ContextMenu x:Name="_expensesMenu" ItemsSource="{Binding CategoryCommands}">
+                    <ContextMenu.ItemTemplate>
+                        <DataTemplate x:DataType="{x:Null}">
+                            <TextBlock Text="{Binding Header}" />
+                        </DataTemplate>
+                    </ContextMenu.ItemTemplate>
+                </ContextMenu>
+            </dg:DataGrid.ContextMenu>
+
         </dg:DataGrid>
     </Grid>
 </UserControl>
