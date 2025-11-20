@@ -1,4 +1,6 @@
-﻿namespace Expensez.Commands {
+﻿using System.Linq;
+
+namespace Expensez.Commands {
     public class NewExpenseCategoryCommand : BaseCommand {
         private readonly CategorizationPresentation _mainPresentation;
 
@@ -10,21 +12,18 @@
         public override string Header => "New...";
 
 
-        public override void Execute(object? parameter) {
-            // var selectedExpenses = _mainPresentation.SelectedExpenses;
-            // if (!selectedExpenses.Any())
-            //     return;
+        public override async void Execute(object? parameter) {
+            if (!(parameter is ExpensePresentation recipient))
+                return;
 
-            // var recipients = selectedExpenses.Select(e => e.Recipient);
-
-            // var dlg = new EditCategoryWindow {
-            //     CategoryName = "",
-            //     Patterns = recipients.ToArray()
-            // };
-            // if (dlg.ShowDialog() == true && !string.IsNullOrEmpty(dlg.CategoryName)) {
-            //     var category = new Category(dlg.CategoryName, dlg.Color, dlg.Patterns);
-            //     _mainPresentation.AddCategory(category);
-            // }
+            var dlg = new EditCategoryWindow {
+                CategoryName = "",
+                Patterns = [recipient.Recipient]
+            };
+            if (await dlg.ShowDialog<bool>(_mainPresentation.Owner!) && !string.IsNullOrEmpty(dlg.CategoryName)) {
+                var category = new Category(dlg.CategoryName, dlg.Color, dlg.Patterns);
+                _mainPresentation.AddCategory(category);
+            }
         }
     }
 }

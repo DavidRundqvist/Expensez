@@ -17,6 +17,7 @@ public partial class App : Application
         {
             var mainPresentation = new MainPresentation(new ExpenseRepository(), new CategoryRepository());
             desktop.MainWindow = new MainWindow(mainPresentation);
+            mainPresentation.Categorization.Owner = desktop.MainWindow;
         }
 
         base.OnFrameworkInitializationCompleted();

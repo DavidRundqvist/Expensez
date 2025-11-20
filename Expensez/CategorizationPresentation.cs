@@ -4,6 +4,7 @@ using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Linq;
 using System.Windows.Input;
+using Avalonia.Controls;
 using Expensez.Commands;
 
 namespace Expensez;
@@ -21,6 +22,11 @@ public class CategorizationPresentation : INotifyPropertyChanged
     public ObservableCollection<CategoryPresentation> Categories { get; } = [];
     public ObservableCollection<ExpensePresentation> Expenses { get; } = [];
     public ObservableCollection<BaseCommand> CategoryCommands { get; } = [];
+
+    public ExpensePresentation[] SelectedExpenses => [.. Expenses.Where(e => e.IsSelected)];
+
+
+    public Window? Owner { get; set; } = null;
 
     public CategorizationPresentation(ExpenseRepository expenseRepository, CategoryRepository categoryRepository)
     {
@@ -60,6 +66,14 @@ public class CategorizationPresentation : INotifyPropertyChanged
         Categories.Clear();
         Categories.AddRange(categories.Select(c => new CategoryPresentation(c)));
     }
+
+    internal void AddCategory(Category category)
+    {
+        _categoryRepository.Add(category);
+        Categories.Add(new CategoryPresentation(category));
+        _categorizer.Categorize(Expenses);
+    }
+
 
     internal void SaveCategories()
     {

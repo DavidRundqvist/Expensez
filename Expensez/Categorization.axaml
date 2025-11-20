@@ -90,12 +90,16 @@
                 <ContextMenu x:Name="_expensesMenu" ItemsSource="{Binding CategoryCommands}">
                     <ContextMenu.ItemTemplate>
                         <DataTemplate x:DataType="{x:Null}">
-                            <TextBlock Text="{Binding Header}" />
+                            <MenuItem
+                                MinHeight="0"
+                                Padding="0,0"
+                                Command="{Binding}"
+                                CommandParameter="{Binding $parent[DataGrid].SelectedItem}"
+                                Header="{Binding Header}" />
                         </DataTemplate>
                     </ContextMenu.ItemTemplate>
                 </ContextMenu>
             </dg:DataGrid.ContextMenu>
-
         </dg:DataGrid>
     </Grid>
 </UserControl>
