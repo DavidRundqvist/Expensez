@@ -84,7 +84,39 @@
                 <dg:DataGridTextColumn Binding="{Binding Date}" Header="Date" />
                 <dg:DataGridTextColumn Binding="{Binding Recipient}" Header="Recipient" />
                 <dg:DataGridTextColumn Binding="{Binding Amount}" Header="Amount" />
+                <dg:DataGridTemplateColumn Header="Category">
+                    <dg:DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="20" />
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
+                                <Canvas Grid.Column="0" VerticalAlignment="Center">
+                                    <Rectangle
+                                        Canvas.Top="-8"
+                                        Width="16"
+                                        Height="16"
+                                        Fill="{Binding Category.Color}" />
+                                </Canvas>
+                                <TextBlock
+                                    Grid.Column="1"
+                                    VerticalAlignment="Center"
+                                    Text="{Binding Category.Name}" />
+                            </Grid>
+                        </DataTemplate>
+                    </dg:DataGridTemplateColumn.CellTemplate>
+                </dg:DataGridTemplateColumn>
             </dg:DataGrid.Columns>
+
+            <DataGrid.RowTheme>
+                <ControlTheme
+                    x:DataType="local:ExpensePresentation"
+                    BasedOn="{StaticResource {x:Type DataGridRow}}"
+                    TargetType="DataGridRow">
+                    <Setter Property="Foreground" Value="{Binding TextColor}" />
+                </ControlTheme>
+            </DataGrid.RowTheme>
 
             <dg:DataGrid.ContextMenu>
                 <ContextMenu x:Name="_expensesMenu" ItemsSource="{Binding CategoryCommands}">

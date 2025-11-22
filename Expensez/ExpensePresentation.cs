@@ -29,9 +29,12 @@ namespace Expensez {
                     _category = value;
                     PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Category)));
                     PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsCategorized)));
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(TextColor)));
                 }
             }
         }
+
+        public string TextColor => IsCategorized ? "Gray" : "White";
         public bool IsSelected { get; set; } = false;
 
         public bool IsCategorized => Category != Constants.DefaultCategory;
