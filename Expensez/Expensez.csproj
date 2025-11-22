@@ -10,6 +10,7 @@
 
   <ItemGroup>
     <PackageReference Include="Avalonia.Controls.DataGrid" Version="11.3.8" />
+    <PackageReference Include="Avalonia.Controls.ColorPicker" Version="11.3.8"/>
     <PackageReference Include="CsvHelper" Version="19.0.0" />
     <PackageReference Include="Avalonia" Version="11.3.8" />
     <PackageReference Include="Avalonia.Desktop" Version="11.3.8" />

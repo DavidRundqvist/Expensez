@@ -21,7 +21,7 @@ namespace Expensez.Commands {
                 Patterns = [recipient.Recipient]
             };
             if (await dlg.ShowDialog<bool>(_mainPresentation.Owner!) && !string.IsNullOrEmpty(dlg.CategoryName)) {
-                var category = new Category(dlg.CategoryName, dlg.Color, dlg.Patterns);
+                var category = new Category(dlg.CategoryName, dlg.Color.ToString(), dlg.Patterns);
                 _mainPresentation.AddCategory(category);
             }
         }

@@ -1,5 +1,7 @@
 ﻿using System;
 using System.ComponentModel;
+using Avalonia.Media;
+using Tmds.DBus.Protocol;
 
 namespace Expensez {
     public class CategoryPresentation : INotifyPropertyChanged {
@@ -32,6 +34,12 @@ namespace Expensez {
                     PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Color)));
                 }
             }
+        }
+
+        public Color AvaloniaColor
+        {
+            get => Avalonia.Media.Color.Parse(this.Color);
+            set => this.Color = value.ToString();
         }
 
         public string[] Patterns {

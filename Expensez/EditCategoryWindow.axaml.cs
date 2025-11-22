@@ -6,19 +6,16 @@ using System.Threading.Tasks;
 using System.Windows;
 using Avalonia.Controls;
 using Avalonia.Interactivity;
+using Avalonia.Media;
 
 namespace Expensez {
     /// <summary>
     /// Interaction logic for EditCategoryWindow.xaml
     /// </summary>
     public partial class EditCategoryWindow : Window {
+
         public EditCategoryWindow() {
             InitializeComponent();
-            // var r = new Random();
-            // Color = System.Windows.Media.Color.FromRgb(
-            //     (byte)r.Next(1, 255),              
-            //     (byte)r.Next(1, 255), 
-            //     (byte)r.Next(1, 233)).ToString();
         }
 
         public string CategoryName { 
@@ -31,21 +28,17 @@ namespace Expensez {
             set => _patterns.Text = string.Join(Environment.NewLine, value).Trim();
         }
 
-        // public string Color {
-        //     get => _colorPicker.SelectedColor?.ToString() ?? "white";
-        //     set => _colorPicker.SelectedColor = (Color)ColorConverter.ConvertFromString(value);
-        // }
-        public string Color {
-            get => "white";
+        public Color Color {
+            get => _colorPicker.Color;
+            set => _colorPicker.Color = value;
         }
 
-
         private void OnOK(object sender, RoutedEventArgs e) {
-            // this.DialogResult = true;
+            this.Close(true);
         }
 
         private void OnCancel(object sender, RoutedEventArgs e) {
-            // this.DialogResult = false;
+            this.Close(false);
         }
     }
 }

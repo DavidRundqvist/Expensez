@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Windows.Input;
+using Avalonia.Media;
 
 namespace Expensez.Commands {
     public class EditCategoryCommand : BaseCommand {
@@ -13,22 +14,22 @@ namespace Expensez.Commands {
 
         public override string Header => "Edit...";
 
-        public override void Execute(object? parameter) {
+        public override async void Execute(object? parameter) {
             if (parameter is not CategoryPresentation category) {
                 return;
             }
 
-            // var dlg = new EditCategoryWindow {
-            //     CategoryName = category.Name,
-            //     Patterns = category.Patterns,
-            //     Color = category.Color,
-            // };
-            // if (dlg.ShowDialog() == true && !string.IsNullOrEmpty(dlg.CategoryName)) {
-            //     category.Name = dlg.CategoryName;
-            //     category.Color = dlg.Color;
-            //     category.Patterns = dlg.Patterns;
-            //     _mainPresentation.SaveCategories();
-            // }
+            var dlg = new EditCategoryWindow {
+                CategoryName = category.Name,
+                Patterns = category.Patterns,
+                Color = Color.Parse(category.Color),
+            };
+            if (await dlg.ShowDialog<bool>(_mainPresentation.Owner!) == true && !string.IsNullOrEmpty(dlg.CategoryName)) {
+                category.Name = dlg.CategoryName;
+                category.Color = dlg.Color.ToString();
+                category.Patterns = dlg.Patterns;
+                _mainPresentation.SaveCategories();
+            }
         }
     }
 

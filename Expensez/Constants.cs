@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Expensez {
     public static class Constants {
-        public const string RootFolder = @"/mnt/NasgulDavid/Expenses";
+        public const string RootFolder = @"/mnt/NasgulDavid/ExpensesTest";
 
         public static Category DefaultCategory { get; } = new Category("Övrigt", "White", new[] { ".*" });
     }

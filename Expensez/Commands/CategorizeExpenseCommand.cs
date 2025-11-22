@@ -1,3 +1,7 @@
+using System.Linq;
+using System.Threading.Tasks;
+using Avalonia.Media;
+
 namespace Expensez.Commands {
     public class CategorizeExpenseCommand : BaseCommand {
         private readonly CategorizationPresentation _mainPresentation;
@@ -11,24 +15,21 @@ namespace Expensez.Commands {
 
         public override string Header => _category.Name;
 
-        public override void Execute(object? parameter) {
-            // var selectedExpenses = _mainPresentation.SelectedExpenses;
-            // if (!selectedExpenses.Any())
-            //     return;
+        public override async void Execute(object? parameter) {
+            if (!(parameter is ExpensePresentation recipient))
+                return;
 
-            // var recipients = selectedExpenses.Select(e => e.Recipient);
-
-            // var dlg = new EditCategoryWindow {
-            //     CategoryName = _category.Name,
-            //     Color = _category.Color,
-            //     Patterns = _category.Patterns.Concat(recipients).ToArray()
-            // };
-            // if (dlg.ShowDialog() == true && !string.IsNullOrEmpty(dlg.CategoryName)) {
-            //     _category.Name = dlg.CategoryName;
-            //     _category.Color = dlg.Color;
-            //     _category.Patterns = dlg.Patterns;               
-            //     _mainPresentation.SaveCategories();
-            // }
+            var dlg = new EditCategoryWindow {
+                CategoryName = _category.Name,
+                Color = Color.Parse(_category.Color),
+                Patterns = _category.Patterns.Concat([recipient.Recipient]).ToArray()
+            };
+            if (await dlg.ShowDialog<bool>(_mainPresentation.Owner!) == true && !string.IsNullOrEmpty(dlg.CategoryName)) {
+                _category.Name = dlg.CategoryName;
+                _category.Color = dlg.Color.ToString();
+                _category.Patterns = dlg.Patterns;               
+                _mainPresentation.SaveCategories();
+            }
         }
     }
 }

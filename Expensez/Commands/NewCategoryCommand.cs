@@ -12,12 +12,12 @@ namespace Expensez.Commands {
 
         public override string Header => "New...";
 
-        public override void Execute(object? parameter) {
-            // var dlg = new EditCategoryWindow();
-            // if (dlg.ShowDialog() == true && !string.IsNullOrEmpty(dlg.CategoryName)) {
-            //     var category = new Category(dlg.CategoryName, dlg.Color, dlg.Patterns);
-            //     _mainPresentation.AddCategory(category);
-            // }
+        public override async void Execute(object? parameter) {
+            var dlg = new EditCategoryWindow();
+            if (await dlg.ShowDialog<bool>(_mainPresentation.Owner!) == true && !string.IsNullOrEmpty(dlg.CategoryName)) {
+                var category = new Category(dlg.CategoryName, dlg.Color.ToString(), dlg.Patterns);
+                _mainPresentation.AddCategory(category);
+            }
         }
     }
 }
