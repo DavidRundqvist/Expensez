@@ -1,0 +1,22 @@
+<Window
+    x:Class="Expensez.MessageBox"
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    Title="Expensez"
+    Width="400"
+    d:DesignHeight="200"
+    SizeToContent="Height"
+    mc:Ignorable="d">
+
+    <DockPanel LastChildFill="True">
+        <!--  Buttons  -->
+        <StackPanel DockPanel.Dock="Bottom" Margin="10" Orientation="Horizontal" HorizontalAlignment="Right">
+            <Button MinWidth="80" Click="OnOK">OK</Button>
+            <Button MinWidth="80" Click="OnCancel" Margin="10,0,0,0">Cancel</Button>
+        </StackPanel>
+
+        <TextBlock Margin="50" x:Name="_messageTB" />
+    </DockPanel>
+</Window>

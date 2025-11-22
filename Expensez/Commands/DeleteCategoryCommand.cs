@@ -15,14 +15,17 @@ namespace Expensez.Commands
 
         public override string Header => "Delete";
 
-        public override void Execute(object? parameter)
+        public override async void Execute(object? parameter)
         {
             if (parameter is not CategoryPresentation category)
             {
                 return;
             }
 
-            _mainPresentation.DeleteCategory(category);
+            if (await MessageBox.ShowDialog(_mainPresentation.Owner!, "Delete?", $"Delete category {category.Name}?"))
+            {
+                _mainPresentation.DeleteCategory(category);
+            }
         }
     }
 }
