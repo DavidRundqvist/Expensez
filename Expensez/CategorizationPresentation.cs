@@ -13,12 +13,13 @@ public class CategorizationPresentation : INotifyPropertyChanged
 {
     public event PropertyChangedEventHandler? PropertyChanged;
 
-    private readonly ICommand _newCategoryCommand;
-    private readonly BaseCommand _newExpenseCategoryCommand;
     private readonly ExpenseRepository _expenseRepository;
     private readonly CategoryRepository _categoryRepository;
     private readonly Categorizer _categorizer;
-    public ICommand NewCategoryCommand => _newCategoryCommand;
+    public BaseCommand NewCategoryCommand {get;}
+    public BaseCommand EditCategoryCommand {get;}
+    public BaseCommand DeleteCategoryCommand {get;}
+    public BaseCommand NewExpenseCategoryCommand {get;}
     public ObservableCollection<CategoryPresentation> Categories { get; } = [];
     public ObservableCollection<ExpensePresentation> Expenses { get; } = [];
     public ObservableCollection<BaseCommand> CategoryCommands { get; } = [];
@@ -30,8 +31,11 @@ public class CategorizationPresentation : INotifyPropertyChanged
 
     public CategorizationPresentation(ExpenseRepository expenseRepository, CategoryRepository categoryRepository)
     {
-        _newCategoryCommand = new NewCategoryCommand(this);
-        _newExpenseCategoryCommand = new NewExpenseCategoryCommand(this);
+        NewCategoryCommand = new NewCategoryCommand(this);
+        EditCategoryCommand = new EditCategoryCommand(this);
+        DeleteCategoryCommand = new DeleteCategoryCommand(this);
+
+        NewExpenseCategoryCommand = new NewExpenseCategoryCommand(this);    
 
         _expenseRepository = expenseRepository;
         _categoryRepository = categoryRepository;
@@ -42,7 +46,7 @@ public class CategorizationPresentation : INotifyPropertyChanged
     private void CategoriesChanged(object? sender, NotifyCollectionChangedEventArgs e)
     {
         CategoryCommands.Clear();
-        CategoryCommands.AddRange(Categories.Select(c => new CategorizeExpenseCommand(this, c)).Concat([_newExpenseCategoryCommand]));
+        CategoryCommands.AddRange(Categories.Select(c => new CategorizeExpenseCommand(this, c)).Concat([NewExpenseCategoryCommand]));
     }
 
     public void Load()

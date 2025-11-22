@@ -57,7 +57,7 @@
                     <ColumnDefinition />
                 </Grid.ColumnDefinitions>
                 <Button Grid.Column="0" Command="{Binding NewCategoryCommand}">New...</Button>
-                <!-- <Button
+                <Button
                     Grid.Column="2"
                     Command="{Binding EditCategoryCommand}"
                     CommandParameter="{Binding SelectedItem, ElementName=_categoriesList}">
@@ -65,9 +65,10 @@
                 </Button>
                 <Button
                     Grid.Column="4"
+                    Command="{Binding DeleteCategoryCommand}"
                     CommandParameter="{Binding SelectedItem, ElementName=_categoriesList}">
                     Delete...
-                </Button>-->
+                </Button>
             </Grid>
         </Grid>
 
