@@ -29,7 +29,7 @@ public class CategorizationPresentation : INotifyPropertyChanged
 
     public Window? Owner { get; set; } = null;
 
-    public CategorizationPresentation(ExpenseRepository expenseRepository, CategoryRepository categoryRepository)
+    public CategorizationPresentation(ExpenseRepository expenseRepository, CategoryRepository categoryRepository, Categorizer categorizer)
     {
         NewCategoryCommand = new NewCategoryCommand(this);
         EditCategoryCommand = new EditCategoryCommand(this);
@@ -39,7 +39,7 @@ public class CategorizationPresentation : INotifyPropertyChanged
 
         _expenseRepository = expenseRepository;
         _categoryRepository = categoryRepository;
-        _categorizer = new Categorizer(categoryRepository);
+        _categorizer = categorizer;
         Categories.CollectionChanged += CategoriesChanged;
     }
 

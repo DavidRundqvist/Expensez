@@ -4,6 +4,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:e="clr-namespace:Expensez"
+    xmlns:r="clr-namespace:Expensez.Results"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     x:DataType="local:MainPresentation"
     xmlns:local="clr-namespace:Expensez"    
@@ -18,6 +19,8 @@
             <e:Categorization Margin="10" DataContext="{Binding Categorization}"/>
         </TabItem>
 
-        <TabItem Header="Results" IsSelected="False" />
+        <TabItem Header="Results" IsSelected="False">
+            <r:ResultsView DataContext="{Binding Results}"/>
+        </TabItem>
     </TabControl>
 </Window>
