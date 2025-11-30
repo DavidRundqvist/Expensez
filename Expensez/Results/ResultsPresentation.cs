@@ -5,6 +5,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Avalonia.Controls;
 
 namespace Expensez.Results {
     public class ResultsPresentation : INotifyPropertyChanged {
@@ -23,7 +24,7 @@ namespace Expensez.Results {
 
             var expensesPerYear = expenses.GroupBy(e => e.Date.Year);
             var yearPresentations = expensesPerYear
-                .Select(yearExpense => new YearResultsPresentation(yearExpense.Key, yearExpense.ToArray(), _categorizer));
+                .Select(yearExpense => new YearResultsPresentation(yearExpense.Key, yearExpense.ToArray(), _categorizer, Owner.Clipboard));
             Years.AddRange(yearPresentations);
 
         }
@@ -31,5 +32,6 @@ namespace Expensez.Results {
         public event PropertyChangedEventHandler? PropertyChanged;
 
         public ObservableCollection<YearResultsPresentation> Years { get; } = new ObservableCollection<YearResultsPresentation>();
+        public Window Owner { get; internal set; }
     }
 }

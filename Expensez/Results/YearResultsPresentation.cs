@@ -1,18 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Avalonia.Input.Platform;
 
 namespace Expensez.Results {
     public class YearResultsPresentation : INotifyPropertyChanged {
         private readonly int _year;
 
-        public YearResultsPresentation(int year, Expense[] expenses, Categorizer categorizer) {
+        public YearResultsPresentation(int year, Expense[] expenses, Categorizer categorizer, IClipboard clipboard) {
             _year = year;
-
+            Clipboard = clipboard;
             var allCategories = categorizer.GetAllCategories();
             var categorization = categorizer.Categorize(expenses);
 
@@ -22,7 +19,8 @@ namespace Expensez.Results {
                     .Where(i => i.Category == c)
                     .Select(i => i.Expense).ToArray()));
 
-            Categories.AddRange(results);                                
+            Categories.AddRange(results);    
+            CopyCommand = new CopyCommand(this);
         }
 
 
@@ -31,5 +29,9 @@ namespace Expensez.Results {
         public ObservableCollection<CategoryResultsPresentation> Categories { get; } = new ObservableCollection<CategoryResultsPresentation>();
 
         public string Header => _year.ToString();
+
+        public IClipboard Clipboard { get; }
+
+        public BaseCommand CopyCommand {get;}
     }
 }

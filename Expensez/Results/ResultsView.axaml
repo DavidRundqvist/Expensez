@@ -26,11 +26,11 @@
                                 FontSize="18" 
                                 ItemsSource="{Binding Categories}">
         
-                                <!-- <dg:DataGrid.ContextMenu>
+                                <dg:DataGrid.ContextMenu>
                                     <ContextMenu>
-                                        <MenuItem Command="Copy"/>
+                                        <MenuItem Command="{Binding CopyCommand}" Header="Copy"/>
                                     </ContextMenu>
-                                </dg:DataGrid.ContextMenu>  -->
+                                </dg:DataGrid.ContextMenu> 
 
                             </dg:DataGrid>
                         </StackPanel>
