@@ -15,38 +15,47 @@
             <Setter Property="Margin" Value="5"></Setter>
         </Style> -->
     </Window.Resources>
-    <DockPanel  >
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
 
-        <StackPanel DockPanel.Dock="Bottom" Margin="10,0,0,0" Orientation="Horizontal" HorizontalAlignment="Right" >
+        <ScrollViewer Grid.Row="0" HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto">
+            <Grid Margin="0,0,0,10">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"></ColumnDefinition>
+                    <ColumnDefinition Width="*"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="40"/>
+                    <RowDefinition Height="40"/>
+                    <RowDefinition Height="40"/>
+                    <RowDefinition Height="*" MinHeight="180"/>
+                </Grid.RowDefinitions>
+                <Label x:Name="_categoryPickerLabel" Margin="5">Category:</Label>
+                <ComboBox x:Name="_categoryPicker" Grid.Column="1" Margin="5" IsVisible="False" SelectionChanged="OnCategorySelectionChanged"></ComboBox>
+
+                <Label Grid.Row="1" Margin="5">Name:</Label>
+                <TextBox x:Name="_categoryName" Grid.Row="1" Grid.Column="1" Margin="5"></TextBox>
+
+                <Label Grid.Row="2" Margin="5">Color:</Label>
+                <ColorPicker x:Name="_colorPicker" Grid.Row="2" Grid.Column="1" Margin="5"></ColorPicker>
+                
+                <Label Grid.Row="3" Margin="5" VerticalAlignment="Top">Patterns:</Label>
+                <TextBox 
+                    x:Name="_patterns"
+                    Grid.Row="3" Grid.Column="1"                 
+                    TextWrapping="Wrap"
+                    AcceptsReturn="True"
+                    Margin="5"
+                    MinHeight="180"/>
+            </Grid>
+        </ScrollViewer>
+
+        <StackPanel Grid.Row="1" Margin="10,0,10,10" Orientation="Horizontal" HorizontalAlignment="Right" >
             <Button Click="OnOK" IsDefault="True">OK</Button>
             <Button Click="OnCancel" IsCancel="True">Cancel</Button>
         </StackPanel>
-
-
-        <Grid>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto"></ColumnDefinition>
-                <ColumnDefinition Width="*"></ColumnDefinition>
-            </Grid.ColumnDefinitions>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="40"/>
-                <RowDefinition Height="40"/>
-                <RowDefinition Height="*"/>
-            </Grid.RowDefinitions>
-            <Label Margin="5">Name:</Label>
-            <TextBox x:Name="_categoryName" Grid.Column="1" Margin="5"></TextBox>
-
-            <Label Grid.Row="1" Margin="5">Color:</Label>
-            <ColorPicker x:Name="_colorPicker" Grid.Row="1" Grid.Column="1" Margin="5"></ColorPicker>
-            
-            <Label Grid.Row="2" Margin="5">Patterns:</Label>
-            <TextBox 
-                x:Name="_patterns"
-                Grid.Row="2" Grid.Column="1"                 
-                TextWrapping="Wrap"
-                AcceptsReturn="True"
-                
-                Margin="5"></TextBox>
-        </Grid>
-    </DockPanel>
+    </Grid>
 </Window>

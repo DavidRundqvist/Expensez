@@ -80,7 +80,8 @@
             HorizontalAlignment="Stretch"
             VerticalAlignment="Stretch"
             AutoGenerateColumns="False"
-            ItemsSource="{Binding Expenses}">
+            ItemsSource="{Binding Expenses}"
+            DoubleTapped="OnExpenseDoubleTapped">
             <dg:DataGrid.Columns>
                 <dg:DataGridTextColumn Binding="{Binding Date}" Header="Date" />
                 <dg:DataGridTextColumn Binding="{Binding Recipient}" Header="Recipient" />
@@ -118,21 +119,6 @@
                     <Setter Property="Foreground" Value="{Binding TextColor}" />
                 </ControlTheme>
             </DataGrid.RowTheme>
-
-            <dg:DataGrid.ContextMenu>
-                <ContextMenu x:Name="_expensesMenu" ItemsSource="{Binding CategoryCommands}">
-                    <ContextMenu.ItemTemplate>
-                        <DataTemplate x:DataType="{x:Null}">
-                            <MenuItem
-                                MinHeight="0"
-                                Padding="0,0"
-                                Command="{Binding}"
-                                CommandParameter="{Binding $parent[DataGrid].SelectedItem}"
-                                Header="{Binding Header}" />
-                        </DataTemplate>
-                    </ContextMenu.ItemTemplate>
-                </ContextMenu>
-            </dg:DataGrid.ContextMenu>
         </dg:DataGrid>
     </Grid>
 </UserControl>

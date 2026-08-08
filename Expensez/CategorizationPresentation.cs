@@ -3,6 +3,7 @@ using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Windows.Input;
 using Avalonia.Controls;
 using Expensez.Commands;
@@ -28,6 +29,33 @@ public class CategorizationPresentation : INotifyPropertyChanged
 
 
     public Window? Owner { get; set; } = null;
+
+    public async Task AssignExpenseToCategoryAsync(ExpensePresentation expense)
+    {
+        if (expense is null || Categories.Count == 0)
+            return;
+
+        var selectedCategory = Categories.FirstOrDefault(c => c.Name == Categories[0].Name) ?? Categories[0];
+        var dialog = new EditCategoryWindow();
+        dialog.ConfigureCategoryAssignment(
+            Categories.ToArray(),
+            selectedCategory,
+            [expense.Recipient]);
+
+        if (await dialog.ShowDialog<bool>(Owner!) == true)
+        {
+            var categoryName = dialog.SelectedCategoryName;
+            var category = Categories.FirstOrDefault(c => c.Name == categoryName);
+            if (category is null)
+                return;
+
+            category.Name = dialog.CategoryName;
+            category.Color = dialog.Color.ToString();
+            category.Patterns = dialog.Patterns.Distinct().ToArray();
+            SaveCategories();
+            _categorizer.Categorize(Expenses);
+        }
+    }
 
     public CategorizationPresentation(ExpenseRepository expenseRepository, CategoryRepository categoryRepository, Categorizer categorizer)
     {
